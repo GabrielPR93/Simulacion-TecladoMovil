@@ -83,12 +83,17 @@ namespace Tema4Ejer6
                 btn = new Button();
                 btn.Text = i.ToString();
                 btn.Location = new Point(punto, punto2);
-                punto += 50;
-                if (i == 3 || i == 6 || i == 9)
+
+                if (i % 3 == 0)
                 {
-                    punto2 += 25;
                     punto = 100;
+                    punto2 += 25;
                 }
+                else
+                {
+                    punto += 50;
+                }
+
                 if (i == 10)
                 {
                     btn.Text = "#";
@@ -164,7 +169,7 @@ namespace Tema4Ejer6
                 if (boton.GetType() == typeof(Button))
                 {
                     boton.BackColor = default;
-                   
+
                 }
             }
         }
@@ -177,16 +182,17 @@ namespace Tema4Ejer6
             this.saveFileDialog1.InitialDirectory = "C:\\";
             this.saveFileDialog1.Filter = "texto(*.txt)|*.txt|Todos los archivos|*.*";
             this.saveFileDialog1.ValidateNames = true;
+            this.saveFileDialog1.OverwritePrompt = false; //asi no pregunta por sobreescritura
             res2 = this.saveFileDialog1.ShowDialog();
 
             switch (res2)
             {
                 case DialogResult.OK:
-                    using (sr = new StreamWriter(this.saveFileDialog1.FileName))
+                    using (sr = new StreamWriter(this.saveFileDialog1.FileName, true))
                     {
                         if (textBox1.Text.Length > 0)
                         {
-                            sr.Write(textBox1.Text);
+                            sr.Write(textBox1.Text + "\n");
                         }
                     }
                     break;
@@ -195,6 +201,11 @@ namespace Tema4Ejer6
                     break;
 
             }
+        }
+
+        private void acercaDeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Toda la Información de la Aplicación", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
